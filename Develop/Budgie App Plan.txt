@@ -1,0 +1,17 @@
+Budgie - A budgeting app for couples.
+
+Features
+__________________
+
+Daily -
+Input your daily transactions
+Grocery Calculator/Shopping list you can add directly to your transactions
+
+Transactions -
+View transaction history
+Edit/Delete Transactions
+
+Budget -
+Choose current budget
+Make multiple budgets
+
