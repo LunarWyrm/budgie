@@ -15,3 +15,9 @@ Budget -
 Choose current budget
 Make multiple budgets
 
+
+Challenges to overcome:
+Understanding how REACT connects with databases, schemas, and seeds.
+
+Challenges Overcomed:
+Trying to decide between handlebars and components (Which would work better for the type of app I am making).
