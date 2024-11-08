@@ -1,23 +1,22 @@
-Budgie - A budgeting app for couples.
+# Budgie - A budgeting app for couples.
 
-Features
-__________________
+## Features
 
-Daily -
+### Daily -
 Input your daily transactions
 Grocery Calculator/Shopping list you can add directly to your transactions
 
-Transactions -
+### Transactions -
 View transaction history
 Edit/Delete Transactions
 
-Budget -
+### Budget -
 Choose current budget
 Make multiple budgets
 
 
-Challenges to overcome:
+### Challenges to overcome:
 Understanding how REACT connects with databases, schemas, and seeds.
 
-Challenges Overcomed:
+### Challenges Overcome:
 Trying to decide between handlebars and components (Which would work better for the type of app I am making).
