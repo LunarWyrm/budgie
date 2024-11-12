@@ -16,13 +16,13 @@ function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/grocery-list">Grocery List</Link>
+              <Link to="/grocery-list">Grocery</Link>
             </li>
             <li>
-              <Link to="/budget-list">Budget List</Link>
+              <Link to="/budget-list">Budget</Link>
             </li>
             <li>
-              <Link to="/transaction-list">Transaction List</Link>
+              <Link to="/transaction-list">Transactions</Link>
             </li>
           </ul>
         </nav>
