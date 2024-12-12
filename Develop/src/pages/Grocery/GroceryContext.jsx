@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 
 const GroceryContext = createContext();
 
-export const GroceryProvider = ({ children }) => {
+export function GroceryProvider({ children }) {
   const [groceryList, setGroceryList] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
@@ -34,6 +34,7 @@ export const GroceryProvider = ({ children }) => {
     );
     setGroceryList(updatedGroceryList);
 
+    // adds marked purchased items to transactions list
     const purchasedItem = updatedGroceryList.find((item) => item.id === itemId);
     if (purchasedItem && purchasedItem.purchased) {
       setTransactions((prevTransactions) => [
@@ -48,6 +49,7 @@ export const GroceryProvider = ({ children }) => {
       value={{
         groceryList,
         transactions,
+        setTransactions,
         addGroceryItem,
         removeGroceryItem,
         togglePurchased,

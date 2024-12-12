@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GroceryItem from "./GroceryItem";
-import TransactionList from "../Transactions/TransactionList";
+import { useGroceryContext } from "./GroceryContext";
 
 function GroceryList() {
   // Placeholder groceries for transactions testing
@@ -53,19 +53,25 @@ function GroceryList() {
   const markSelectedAsPurchased = () => {
     const purchasedItems = groceries.filter(item => item.purchased);
     const remainingItems = groceries.filter(item => !item.purchased);
-
-    setTransactions((prevTransactions) => [...prevTransactions, ...purchasedItems]);
-    setGroceries(remainingItems);
+    
+    const updatedTransactions = [...prevTransactions, ...purchasedItems];
+    const updatedGroceries = remainingItems;
+  
+    setTransactions(updatedTransactions);
+    setGroceries(updatedGroceries);
 
     // Update local storage with new grocery list and transactions
-    localStorage.setItem("groceryList", JSON.stringify(remainingItems));
-    localStorage.setItem("transactions", JSON.stringify([...transactions, ...purchasedItems]));
+    localStorage.setItem("groceryList", JSON.stringify(updatedGroceries));
+    localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
+    
+    return updatedTransactions;
   };
 
   // Load groceries from local storage
   const loadGroceries = () => {
     const savedList = JSON.parse(localStorage.getItem("groceryList")) || [];
     setGroceries(savedList);
+    
     const savedTransactions = JSON.parse(localStorage.getItem("transactions")) || [];
     setTransactions(savedTransactions);
   };
