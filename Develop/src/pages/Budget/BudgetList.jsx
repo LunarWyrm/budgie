@@ -9,7 +9,7 @@ function BudgetList() {
 
   return (
     <div className="budget-list">
-      <h2 className="budget-title">Budgets</h2>
+      <h2 className="titles">Budgets</h2>
       {budgets.map((budget, index) => (
         <BudgetItem key={index} {...budget} />
       ))}

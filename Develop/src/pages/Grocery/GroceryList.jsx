@@ -70,7 +70,7 @@ function GroceryList() {
 
   return (
     <div className="grocery-list">
-      <h2>Grocery List</h2>
+      <h2 className="titles">Grocery List</h2>
       {groceryList.map((item) => (
         <GroceryItem
           key={item.id}
@@ -115,7 +115,7 @@ function GroceryList() {
           value={newItem.datePurchased}
           onChange={handleInputChange}
         />
-        <button type="submit">Add Grocery</button>
+        <button className="misc-btn" type="submit">Add Grocery</button>
       </form>
     </div>
   );
