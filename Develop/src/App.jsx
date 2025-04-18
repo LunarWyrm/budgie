@@ -12,7 +12,7 @@ function App() {
     <Router>
       <div className="App">
         <nav>
-          <img className="budgie-logo" src="src\assets\images\Budgie_Logo.png" alt="Budgie Logo" draggable="false" />
+          <img className="budgie-logo" src="src\assets\images\Budgie_Logo_V2.png" alt="Budgie Logo" draggable="false" />
           <div className="columns">
             <ul class="menu">
               <li class="menu-list">

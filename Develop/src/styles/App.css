@@ -19,9 +19,7 @@ nav {
 }
 
 .budgie-logo {
-  margin-top: -10px;
-  margin-left: -6px;
-  transform: scale(1.35);
+  transform: scale(1.1);
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
@@ -32,7 +30,7 @@ nav {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  margin-top: -10px;
+  margin-top: 40px;
   width: 100%;
 }
 
@@ -87,13 +85,51 @@ input {
   margin: 5px 0;
 }
 
-button {
+/* SIGN UP / LOG IN */
+.user-form {
+  text-align: left;
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.sign-up-btn {
+  background-color: #B281FC;
+  color: white;
   padding: 10px 20px;
-  margin-top: 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
   border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 5px;
+}
+
+.sign-up-btn.active {
+  background-color: #9a5ae0;
+}
+
+.sign-up-btn:hover {
+  background-color: #8c4ec4;
+  transform: scale(1.05);
+}
+
+.misc-btn {
+  background-color: #27c95f;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 5px;
+}
+
+.misc-btn.active {
+  background-color: #1fa34f;
+}
+
+
+.misc-btn:hover {
+  background-color: #22b952;
+  transform: scale(1.05);
 }
 
 .modal {
@@ -111,19 +147,158 @@ button {
   transition: visibility 0s, opacity 0.3s;
 }
 
-
-/* BUDGET */
-
-
 /* GROCERIES */
+
+.grocery-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 1rem;
+  background-color: #1f1f1f;
+  border-radius: 8px; /* No more left border */
+  margin: 0.5rem 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s;
+}
+
+.grocery-item.purchased {
+  opacity: 0.6;
+  background-color: #4b4b4b;
+  text-decoration: line-through;
+}
+
+.grocery-item-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+  padding-left: 50px;
+}
+
+.grocery-item input[type="checkbox"] {
+  transform: scale(1.3);
+  margin-top: 0.3rem;
+}
+
+.grocery-item-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.grocery-item-details h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.grocery-item-details p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #b6b6b6;
+}
+
+.check-indicator {
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #27c95f;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1.2rem;
+  color: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.check-indicator i {
+  font-size: 1.5rem;
+  color: white;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.check-indicator:hover {
+  background-color: #1fa34f;
+}
+
+.grocery-item.purchased .check-indicator {
+  background-color: #98e970;
+  color: black;
+}
+
+.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+.delete-btn:focus {
+  outline: none;
+}
+
+
 .grocery-item.purchased {
   text-decoration: line-through;
   color: gray;
 }
 
+.mark-purchased-button {
+  border: 2px solid rgb(255, 255, 255);
+  padding: 10px 20px;
+  background-color: #27c95f;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mark-purchased-button:hover {
+  background-color: red;
+  color: white;
+}
+
+/* BUDGET */
+.budget-title {
+  font-size: xx-large;
+  color: #98E970;
+}
+
+.budget-box {
+  color: #0c0b0f;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid #035c3e;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  background-color: #a6f796;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
 /* TRANSACTIONS */
 
 .transactions-table {
+  color: #f1f1f1;
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
@@ -137,7 +312,38 @@ button {
 }
 
 .transactions-table th {
-  background-color: #f4f4f4;
+  background-color: #333333;
   font-weight: bold;
 }
 
+/* ALTERNATING ITEM COLOURS */
+.even-row {
+  background-color: #424242;
+}
+
+.odd-row {
+  background-color: #333333;
+}
+
+.transactions-table tr:hover {
+  background-color: #ccc;
+}
+
+/* MISC UI */
+
+.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+.delete-btn:focus {
+  outline: none;
+}

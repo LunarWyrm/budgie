@@ -2,9 +2,9 @@ import React from "react";
 
 function BudgetItem({ name, amount }) {
   return (
-    <div className="budget-item">
-      <span>{name}</span>
-      <span>${amount}</span>
+    <div className="budget-box">
+      <h3>{name}</h3>
+      <p>${amount}</p>
     </div>
   );
 }

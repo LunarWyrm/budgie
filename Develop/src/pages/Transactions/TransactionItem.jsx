@@ -1,3 +1,4 @@
+// TransactionItem.jsx
 import React from "react";
 
 function TransactionItem({ date, name, amount }) {

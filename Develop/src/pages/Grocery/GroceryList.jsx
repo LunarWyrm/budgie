@@ -1,32 +1,25 @@
-import React, { useState, useEffect } from "react";
+// GroceryList.jsx
+import React, { useState } from "react";
 import GroceryItem from "./GroceryItem";
 import { useGroceryContext } from "./GroceryContext";
 
 function GroceryList() {
-  // Placeholder groceries for transactions testing
-  const [groceries, setGroceries] = useState([
-    { name: "Milk", quantity: 2, cost: 3.50, datePurchased: new Date().toISOString().split('T')[0], purchased: false },
-    { name: "Eggs", quantity: 12, cost: 2.99, datePurchased: new Date().toISOString().split('T')[0], purchased: false },
-  ]);
+  const {
+    groceryList,
+    setGroceryList,
+    setTransactions,
+    addGroceryItem,
+    removeGroceryItem,
+    togglePurchased,
+  } = useGroceryContext();
 
   const [newItem, setNewItem] = useState({
     name: "",
     quantity: 1,
     cost: 0,
-    datePurchased: new Date().toISOString().split('T')[0],
-    purchased: false
+    datePurchased: new Date().toISOString().split("T")[0],
+    purchased: false,
   });
-
-  const [transactions, setTransactions] = useState([]);
-
-  // Toggle item's purchased status
-  const togglePurchased = (index) => {
-    setGroceries((prevGroceries) =>
-      prevGroceries.map((item, i) =>
-        i === index ? { ...item, purchased: !item.purchased } : item
-      )
-    );
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,62 +29,59 @@ function GroceryList() {
     }));
   };
 
-  // Add new grocery item and save to local storage
   const addGrocery = (e) => {
     e.preventDefault();
-    const item = { ...newItem, id: Date.now() };  // Adding an ID for uniqueness
-    setGroceries((prevGroceries) => [...prevGroceries, item]);
-    setNewItem({ name: "", quantity: 1, cost: 0, datePurchased: new Date().toISOString().split('T')[0], purchased: false });
-
-    // Save new grocery list to local storage
-    const currentList = JSON.parse(localStorage.getItem("groceryList")) || [];
-    currentList.push(item);
-    localStorage.setItem("groceryList", JSON.stringify(currentList));
+    const item = { ...newItem, id: Date.now() };
+    addGroceryItem(item);
+    setNewItem({
+      name: "",
+      quantity: 1,
+      cost: 0,
+      datePurchased: new Date().toISOString().split("T")[0],
+      purchased: false,
+    });
   };
 
-  // Mark purchased and move to transactions
   const markSelectedAsPurchased = () => {
-    const purchasedItems = groceries.filter(item => item.purchased);
-    const remainingItems = groceries.filter(item => !item.purchased);
-    
-    const updatedTransactions = [...prevTransactions, ...purchasedItems];
-    const updatedGroceries = remainingItems;
-  
-    setTransactions(updatedTransactions);
-    setGroceries(updatedGroceries);
+    const purchasedItems = groceryList.filter((item) => item.purchased);
+    console.log('Purchased Items:', purchasedItems); // Debugging log
 
-    // Update local storage with new grocery list and transactions
-    localStorage.setItem("groceryList", JSON.stringify(updatedGroceries));
-    localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
-    
-    return updatedTransactions;
+    // Move purchased items to transactions with timestamp
+    setTransactions((prev) => [
+      ...prev,
+      ...purchasedItems.map((item) => ({
+        ...item,
+        purchased: true,
+        datePurchased: new Date().toISOString(),
+      })),
+    ]);
+
+    // Remove purchased items from grocery list
+    setGroceryList((prev) => {
+      const updatedList = prev.filter((item) => !item.purchased);
+      console.log('Updated Grocery List:', updatedList); // Debugging log
+      return updatedList;
+    });
   };
 
-  // Load groceries from local storage
-  const loadGroceries = () => {
-    const savedList = JSON.parse(localStorage.getItem("groceryList")) || [];
-    setGroceries(savedList);
-    
-    const savedTransactions = JSON.parse(localStorage.getItem("transactions")) || [];
-    setTransactions(savedTransactions);
-  };
-
-  useEffect(() => {
-    loadGroceries();
-  }, []);
+  const removeItem = (id) => {
+  removeGroceryItem(id);
+};
 
   return (
     <div className="grocery-list">
       <h2>Grocery List</h2>
-      {groceries.map((item, index) => (
+      {groceryList.map((item) => (
         <GroceryItem
-          key={index}
+          key={item.id}
           {...item}
-          togglePurchased={() => togglePurchased(index)}
+          togglePurchased={() => togglePurchased(item.id)}
+          removeItem={() => removeItem(item.id)}
         />
       ))}
-
-      <button onClick={markSelectedAsPurchased}>Mark Selected as Purchased</button>
+      <button onClick={markSelectedAsPurchased} className="mark-purchased-button">
+        Mark Selected as Purchased
+        </button>
 
       <form onSubmit={addGrocery}>
         <input

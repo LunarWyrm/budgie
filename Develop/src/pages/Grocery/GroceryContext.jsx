@@ -1,3 +1,4 @@
+// GroceryContext.jsx
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 const GroceryContext = createContext();
@@ -6,7 +7,7 @@ export function GroceryProvider({ children }) {
   const [groceryList, setGroceryList] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
-  // Loads grocery list from local storage
+  // Only load once on first mount
   useEffect(() => {
     const storedGroceryList = JSON.parse(localStorage.getItem("groceryList"));
     const storedTransactions = JSON.parse(localStorage.getItem("transactions"));
@@ -14,7 +15,7 @@ export function GroceryProvider({ children }) {
     if (storedTransactions) setTransactions(storedTransactions);
   }, []);
 
-  // save grocery list when it changes
+  // Save to localStorage when state changes
   useEffect(() => {
     localStorage.setItem("groceryList", JSON.stringify(groceryList));
     localStorage.setItem("transactions", JSON.stringify(transactions));
@@ -25,41 +26,41 @@ export function GroceryProvider({ children }) {
   };
 
   const removeGroceryItem = (itemId) => {
-    setGroceryList((prevList) => prevList.filter((item) => item.id !== itemId));
+    setGroceryList((prevList) =>
+      prevList.filter((item) => item.id !== itemId)
+    );
   };
 
-  const togglePurchased = (itemId) => {
-    const updatedGroceryList = groceryList.map((item) =>
-      item.id === itemId ? { ...item, purchased: !item.purchased } : item
+  const removeTransactionItem = (itemId) => {
+    setTransactions((prevList) =>
+      prevList.filter((item) => item.id !== itemId)
     );
-    setGroceryList(updatedGroceryList);
-
-    // adds marked purchased items to transactions list
-    const purchasedItem = updatedGroceryList.find((item) => item.id === itemId);
-    if (purchasedItem && purchasedItem.purchased) {
-      setTransactions((prevTransactions) => [
-        ...prevTransactions,
-        { ...purchasedItem, purchaseDate: new Date().toISOString() },
-      ]);
-    }
+  };
+  
+  const togglePurchased = (itemId) => {
+    setGroceryList((prevList) =>
+      prevList.map((item) =>
+        item.id === itemId ? { ...item, purchased: !item.purchased } : item
+      )
+    );
   };
 
   return (
     <GroceryContext.Provider
       value={{
         groceryList,
+        setGroceryList,
         transactions,
         setTransactions,
         addGroceryItem,
         removeGroceryItem,
+        removeTransactionItem,
         togglePurchased,
       }}
     >
       {children}
     </GroceryContext.Provider>
   );
-};
+}
 
-export const useGroceryContext = () => {
-  return useContext(GroceryContext);
-};
+export const useGroceryContext = () => useContext(GroceryContext);

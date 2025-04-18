@@ -33,35 +33,43 @@ function Home() {
 
   return (
     <div className="home">
-      <h1>Welcome to Budgie!</h1>
+      <h1 className="title">Welcome to Budgie!</h1>
       
-      <button onClick={() => setIsSignUp(true)}>Sign Up</button>
-      <button onClick={() => setIsSignUp(false)}>Log In</button>
+      <button className="sign-up-btn" onClick={() => setIsSignUp(true)}>Sign Up</button>
+      <button className="misc-btn" onClick={() => setIsSignUp(false)}>Log In</button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{isSignUp ? "Sign Up" : "Log In"}</h2>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
+        <h2 className="title">{isSignUp ? "Sign Up" : "Log In"}</h2>
+        <div className="user-form">
+          <div>
+            <label>Username:</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">{isSignUp ? "Sign Up" : "Log In"}</button>
+
+        {isSignUp ? (
+          <button className="sign-up-btn" type="submit">Sign Up</button>
+        ) : (
+          <button className="misc-btn" type="submit">Log In</button>
+        )}
       </form>
+
 
       {user && !isSignUp && (
         <div>
